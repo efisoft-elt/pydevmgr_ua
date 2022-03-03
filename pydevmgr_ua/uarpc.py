@@ -28,8 +28,9 @@ class UaRpc(BaseRpc, _UaComCapabilities):
         ) -> None:
         super().__init__(key, config=config, **kwargs)   
         com = parse_com(com, self._config.com)
-
-        self._com = com.rpccom('', self._config.suffix)
+        # suffix define node and method name 
+        node_name, method_name = ksplit( self._config.suffix )
+        self._com = com.rpccom(node_name, method_name)
     
     @property
     def sid(self) -> Any:
