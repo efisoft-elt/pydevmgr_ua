@@ -14,6 +14,10 @@ class UaDevice(BaseDevice):
     Interface = UaInterface
     
     class Config(BaseDevice.Config):
+        Node = UaNode.Config
+        Interface = UaInterface.Config
+        Rpc = UaRpc.Config
+
         type: str = "Ua"
         # AnyUrl  will valid the address to an url 
         # the url is first replaced on-the-fly if defined in host_mapping 

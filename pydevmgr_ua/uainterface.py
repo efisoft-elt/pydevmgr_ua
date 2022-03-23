@@ -6,6 +6,9 @@ from pydantic import BaseModel, AnyUrl
 from typing import Optional, Any, Union, List, Type, Dict
 
 class UaInterfaceConfig(BaseInterface.Config):
+    Node = UaNode.Config
+    Rpc = UaRpc.Config
+
     type: str = "Ua"
     prefix: str = "" # prefix added to com.prefix 
     # these are used only if no com is given to the interface

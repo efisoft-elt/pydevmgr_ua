@@ -1,3 +1,7 @@
+0.4.0
+=====
+Follow the reformating of pydevmgr core 
+
 0.3.1
 =====
 
