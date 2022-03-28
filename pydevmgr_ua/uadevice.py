@@ -37,7 +37,15 @@ class UaDevice(BaseDevice):
         config.address = com.address 
         config.namespace = com.namespace           
         return com.subcom(config.prefix)
-            
+    
+    @classmethod
+    def new_args(cls, parent, config):
+        d = super().new_args(parent, config)
+        if isinstance( parent, (UaDevice, UaInterface) ):
+            d.update(com=parent.com)
+        return d
+
+
     def connect(self):
         """ Connect to the OPC-UA client """
         self._com.connect()
