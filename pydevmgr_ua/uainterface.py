@@ -5,7 +5,7 @@ from .uarpc import UaRpc
 from pydantic import BaseModel, AnyUrl
 from typing import Optional, Any, Union, List, Type, Dict
 
-class UaInterfaceConfig(BaseInterface.Config):
+class UaInterfaceConfig(BaseInterface.Config, extra="allow"):
     Node = UaNode.Config
     Rpc = UaRpc.Config
 

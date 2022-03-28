@@ -13,7 +13,7 @@ class UaDevice(BaseDevice):
     Rpc = UaRpc
     Interface = UaInterface
     
-    class Config(BaseDevice.Config):
+    class Config(BaseDevice.Config, extra="allow"):
         Node = UaNode.Config
         Interface = UaInterface.Config
         Rpc = UaRpc.Config

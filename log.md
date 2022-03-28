@@ -1,3 +1,8 @@
+0.4.3
+=====
+Allowing extra in UaDevice and UaInterface so they can be used in a generic way 
+
+
 0.4.2
 =====
 - a ua_device inside a ua_device now construct the prefix and parse the communication.
