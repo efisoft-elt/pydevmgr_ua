@@ -11,7 +11,6 @@ class UaNodeConfig(BaseNode.Config):
     type: str = 'Ua'
     suffix: Optional[str] = None # Suffix for the node name added to the com.prefix
     # these 
-    com: Optional[UaCom.Config] = None
     attribute: ua.AttributeIds = ua.AttributeIds.Value
     
     @validator("attribute", pre=True)
@@ -104,7 +103,7 @@ class UaNode(BaseNode, _UaComCapabilities):
           **kwargs
         ) -> None:
         super().__init__(key, config=config, **kwargs)        
-        com = parse_com(com, self._config.com)
+        com = parse_com(com, None)
         self._com = com.nodecom(self._config.suffix)
     
     @property
@@ -125,20 +124,6 @@ class UaNode(BaseNode, _UaComCapabilities):
     def com(self):
         return self._com
             
-    def connect(self) -> None:
-        """ Establish the client connection to OPC-UA server """
-        self._com.connect()
-        
-    def disconnect(self) -> None:
-        """ disconnect the OPC-UA client 
-        
-        This will only work if the Interface own the OPC-UA client (e.i. if the client was built at init)
-        """
-        self._com.disconnect()
-    
-    def is_connected(self) -> bool:
-        """ Return True if the current device is connected to OPC-UA """
-        return self._com.is_connected()               
     def read_collector(self) -> UAReadCollector:
         """ Return a :class:`UAReadCollector` object to queue nodes for reading """
         return self._com.read_collector()
@@ -150,7 +135,6 @@ class UaNode(BaseNode, _UaComCapabilities):
     def fget(self) -> Any:
         """ get the value from server """
         return self._com.get_attribute(self.config.attribute)
-        return self._com.get_value()
     
     def fset(self, value: Any) -> None:
         """ set the value on server 
@@ -160,7 +144,7 @@ class UaNode(BaseNode, _UaComCapabilities):
                 can be str, float, int, or :class:`ua.Variant` or  :class:`ua.DataValue` 
         """
         a = self.config.attribute
-        datavalue = self._parse_value_for_ua(value)
+        datavalue = self._parse_value_for_ua(value) # is the node as a parser it as already been parsed 
         self._com.set_attribute(a, datavalue)
             
     def _parse_value_for_ua(self, value: Any) -> None:        

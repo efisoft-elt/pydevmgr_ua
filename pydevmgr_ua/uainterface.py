@@ -11,11 +11,7 @@ class UaInterfaceConfig(BaseInterface.Config):
 
     type: str = "Ua"
     prefix: str = "" # prefix added to com.prefix 
-    # these are used only if no com is given to the interface
-    # a root com is made on the fly
-    com : Optional[UaCom.Config] = None    
-    
-    
+     
 @record_class    
 class UaInterface(BaseInterface):
     """ Interface containing :class:`pydevmgr_ua.UaNode` or :class:`pydevmgr_ua.UaRpcNode` objects
@@ -84,18 +80,4 @@ class UaInterface(BaseInterface):
     def com(self):
         return self._com
             
-    def connect(self) -> None:
-        """ Establish the client connection to OPC-UA server """
-        self._com.connect()
-        
-    def disconnect(self) -> None:
-        """ disconnect the OPC-UA client 
-        
-        This will only work if the Interface own the OPC-UA client (e.i. if the client was built at init)
-        """
-        self._com.disconnect()
-    
-    def is_connected(self) -> bool:
-        """ Return True if the current device is connected to OPC-UA """
-        return self._com.is_connected()    
-    
+
