@@ -64,7 +64,7 @@ class UaInterface(BaseInterface):
         ) -> None:
         
         super().__init__(key, config=config, **kwargs)        
-        com = parse_com(com, self._config.com)
+        com = parse_com(com, None)
           
         # assume it is a _UaCom object or similar 
         # not checking the type because I am the feeling it can be usefull for simulator at some points 
