@@ -17,7 +17,7 @@ setup(
     #data_files=data_files,
     license='CeCILL Free Software License Agreement v2.1',
     long_description=open('README.md').read(),
-    install_requires=[ 'cryptography', 'opcua', 'pydevmgr_core>=0.4.1'], 
+    install_requires=[ 'cryptography', 'opcua', 'pydevmgr_core>=0.4.2'], 
     
     extras_require={
     },
