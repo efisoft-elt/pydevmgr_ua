@@ -1,3 +1,7 @@
+0.4.4
+=====
+Align to pydevmgr_core 0.4.3
+
 0.4.3
 =====
 Allowing extra in UaDevice and UaInterface so they can be used in a generic way 
