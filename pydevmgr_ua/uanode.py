@@ -29,13 +29,10 @@ class UaNode(BaseNode, _UaComCapabilities):
     
         key (str, optional): The string key representing the node in its context. If none a unique 
                    string key is build.
-        config (optional, :class:`pydevmgr_ua.UaNode.Config`, dict): Config for the node            
-        com  (optional, :class:`pydevmgr_ua.UaCom`, :class:`pydevmgr_ua._UaCom`, str, dict): 
-                The client com interface for OPC-UA inerited from a parent object 
-                (e.g. a :class:`pydevmgr_ua.UaInterface` or :class:`pydevmgr_ua.UaDevice`).
-                 
-                If not given a new one is created from config.com if config.com is None a default one
-                is created with uaconfig.default_address and uaconfig.namespace
+        config (optional, :class:`pydevmgr_ua.UaNode.Config`, dict): Config for the node
+            includes: 
+                - suffix (str): the node suffix in the OPC-UA server
+                - attribute (uaAttributeIds) 
         
         For other arguments please see :class:`pydevmgr_core.BaseNode` documentation
                 
