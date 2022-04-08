@@ -9,7 +9,7 @@ if sys.version_info < (3, 6, 0, 'final', 0):
 
 setup(
     name= 'pydevmgr_ua',
-    version= '0.4.4', # https://www.python.org/dev/peps/pep-0440/
+    version= '0.4.5', # https://www.python.org/dev/peps/pep-0440/
     author='Sylvain Guieu',
     author_email='sylvain.guieu@univ-grenoble-alpes.fr',
     packages=find_packages(), 
@@ -17,7 +17,7 @@ setup(
     #data_files=data_files,
     license='CeCILL Free Software License Agreement v2.1',
     long_description=open('README.md').read(),
-    install_requires=[ 'cryptography', 'opcua', 'pydevmgr_core>=0.4.3'], 
+    install_requires=[ 'cryptography', 'opcua', 'pydevmgr_core>=0.4.4'], 
     
     extras_require={
     },

@@ -1,3 +1,8 @@
+0.4.5
+=====
+- Some cleanup. com is now part of UaDevice.__init__ because not anymore in BaseDevice.__init__ 
+- Align to core 0.4.4
+
 0.4.4
 =====
 Align to pydevmgr_core 0.4.3
