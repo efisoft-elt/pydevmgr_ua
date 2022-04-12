@@ -1,7 +1,7 @@
 import opcua
 from opcua import ua
 from typing import Optional, Any, Dict, Union
-from pydevmgr_core import BaseReadCollector, BaseWriteCollector, BaseCom, reconfig, BaseParser, record_class
+from pydevmgr_core import reconfig, BaseParser, record_class
 from .config import uaconfig
 from pydantic import BaseModel, AnyUrl, Field, Extra
 from enum import Enum
@@ -503,7 +503,7 @@ class _UaCom:
     def address(self):
         return self._ua_client.server_url.geturl()
     
-class UaCom(_UaCom, BaseCom):
+class UaCom(_UaCom):
     """ This is a wrapper arround the :class:`opcua.Client`
     
     All objects,  :class:`pydevmgr.UaDevice`, :class:`pydevmgr.UaInterface`, ... will use 
@@ -546,7 +546,11 @@ class UaCom(_UaCom, BaseCom):
         ua_client = opcua.Client(address)
         super().__init__(ua_client, config.prefix, namespace=config.namespace)
         self._config = config
-        
+    
+    @property
+    def config(self):
+        return self._config
+
     def reset(self):
         if self.is_connected():
             raise ValueError("Please disconnect before doing reset to kill thread background processes")
