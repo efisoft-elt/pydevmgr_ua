@@ -71,8 +71,8 @@ class UaInterface(BaseInterface):
         self._com = com.subcom(self._config.prefix)
     
     @classmethod
-    def new_args(cls, parent, config):
-        d = super().new_args(parent, config)
+    def new_args(cls, parent, name, config):
+        d = super().new_args(parent, name, config)
         d.update(com=parent.com)
         return d        
 

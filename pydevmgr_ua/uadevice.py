@@ -66,8 +66,8 @@ class UaDevice(BaseDevice):
         return self._com
 
     @classmethod
-    def new_args(cls, parent, config):
-        d = super().new_args(parent, config)
+    def new_args(cls, parent, name, config):
+        d = super().new_args(parent, name,  config)
         if isinstance( parent, (UaDevice, UaInterface) ):
             d.update(com=parent.com)
         return d
