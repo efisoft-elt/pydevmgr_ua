@@ -77,13 +77,14 @@ class UaNode(BaseNode, _UaComCapabilities):
     
     ::
     
-        from pydevmgr_ua import UaInterface, UaNode, FormulaNode1
-        from pydevmgr_core import FormulaNode1
+        from pydevmgr_ua import UaInterface, UaNode
+        from pydevmgr_core.nodes import Formula1
+        
         class MyInterface(UaInterface):            
             temp_volt = UaNode.prop(suffix="Temp001")
             humidity = UaNode.prop(suffix="Humidity001")
             
-            temp_kelvin = FormulaNode1.prop(node="temp_volt", formula="230 + 1.234 * t", varname="t")
+            temp_kelvin = Formula1.prop(node="temp_volt", formula="230 + 1.234 * t", varname="t")
         
         sensors = MyInterface(com={'address', "opc.tcp://localhost:4840", namespace=4, prefix="MAIN"})
         
