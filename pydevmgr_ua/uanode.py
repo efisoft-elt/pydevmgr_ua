@@ -146,7 +146,5 @@ class UaNode(BaseNode, _UaComCapabilities):
         self._com.set_attribute(a, datavalue)
             
     def _parse_value_for_ua(self, value: Any) -> None:        
-        #if self._parser:
-        #    value = self._parser(value)
         return self._com.parse_value(value)
         
