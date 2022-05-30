@@ -81,18 +81,18 @@ class VARIANTS(str, Enum):
 def _record_variants():   
     for t in ua.VariantType:
         if "Int" in t.name:
-            def parse(value, config, vtype=t):
+            def fparse(value, config, vtype=t):
                 return ua.Variant(int(value), vtype)
         elif "Float" in t.name or "Double" in t.name:
-            def parse(value, config, vtype=t):
+            def fparse(value, config, vtype=t):
                 return ua.Variant(float(value), vtype)
         else:        
-            def parse(value, config, vtype=t):
+            def fparse(value, config, vtype=t):
                 return ua.Variant(value, vtype)
         class Config(BaseParser.Config):
             type: str = 'Ua'+t.name
             
-        cls = type( 'Ua'+t.name, (BaseParser,), {'parse':staticmethod(parse), 'Config':Config})
+        cls = type( 'Ua'+t.name, (BaseParser,), {'fparse':staticmethod(fparse), 'Config':Config})
         record_class(cls)
         record_class(cls, type=t.name+"Variant")
         globals()[t.name] = cls()
@@ -120,7 +120,7 @@ class VariantParser(BaseParser):
         type: str = "Variant2"
         variant: VARIANTS = VARIANTS.Double 
     @staticmethod
-    def parse(value, config):
+    def fparse(value, config):
         return ua.Variant(value, getattr(ua.VariantType, config.variant))   
         
 ##
