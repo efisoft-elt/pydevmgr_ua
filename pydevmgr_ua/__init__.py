@@ -1,4 +1,5 @@
-from .uacom import * 
+from .variants import * 
+from .uacom import UaCom  
 from .uainterface import UaInterface
 from .uanode import UaNode
 from .uadevice import UaDevice

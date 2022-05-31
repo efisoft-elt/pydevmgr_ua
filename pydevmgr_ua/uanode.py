@@ -40,14 +40,14 @@ class UaNode(BaseNode, _UaComCapabilities):
             
                 Several parser to ua Variant are defined in pydevmgr_ua and can be set with the `parser` argument: 
                 
-                - Int16, INT    (INT is an alias as TwinCat defines it)
-                - Int32, DINT
-                - Int64, LINT
-                - UInt16, UINT
-                - UInt32, UDINT
-                - UInt64, ULINT
-                - Float, REAL
-                - Double, LREAL
+                - UaInt16, INT    (INT is an alias as TwinCat defines it)
+                - UaInt32, DINT
+                - UaInt64, LINT
+                - UaUInt16, UINT
+                - UaUInt32, UDINT
+                - UaUInt64, ULINT
+                - UaFloat, REAL
+                - UaDouble, LREAL
                 
                 can also be created by VariantParser('Int16')                
                 

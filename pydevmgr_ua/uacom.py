@@ -1,128 +1,15 @@
 import opcua
 from opcua import ua
-from typing import Optional, Any, Dict, Union
+from typing import Callable, Optional, Any,  Union
 from pydevmgr_core import reconfig, BaseParser, record_class
 from .config import uaconfig
-from pydantic import BaseModel, AnyUrl, Field, Extra
-from enum import Enum
+from pydantic import BaseModel, AnyUrl, Field, Extra, validator
 
-
-def _ua_server_sid(client):
-    """ Used in node to get a unique id per server 
-    
-    When for instance using download or upload method the coms are grouped 
-    by server ID to allow one single call per server. 
-    """
-    u = client.server_url
-    return (u.hostname, u.port) 
 
 def kjoin(*names) -> str:        
     return ".".join(a for a in names if a)
 
-######
-#  Some special Vars with no or ambigous native python equivalent 
-
-def Int16(value:int) -> ua.Variant:
-    return ua.Variant(int(value), ua.VariantType.Int16) 
-INT = Int16
-
-def Int32(value: int) -> ua.Variant:
-    return ua.Variant(int(value), ua.VariantType.Int32)
-DINT = Int32
-
-def Int64(value: int) -> ua.Variant:
-    return ua.Variant(int(value), ua.VariantType.Int64)  
-LINT = Int64
-
-def UInt16(value: int) -> ua.Variant:
-    return ua.Variant(int(value), ua.VariantType.UInt16) 
-UINT = UInt16
-
-def UInt32(value: int) -> ua.Variant:
-    return ua.Variant(int(value), ua.VariantType.UInt32)
-UDINT = UInt32
-
-def UInt64(value: int) -> ua.Variant:
-    return ua.Variant(int(value), ua.VariantType.UInt64)        
-ULINT = UInt64
-
-def Float(value: float) -> ua.Variant:
-    return ua.Variant(float(value), ua.VariantType.Float)
-REAL = Float
-
-def Double(value: float) -> ua.Variant:
-    return ua.Variant(float(value), ua.VariantType.Double)
-LREAL = Double
-
-
-
-class VARIANTS(str, Enum):
-    """ Enumerator for Variant Parser """
-    Int16 = "Int16"
-    INT = "Int16"
-    Int32 = "Int32"
-    DINT = "Int32"
-    Int64 = "Int64"
-    LINT = "Int64"
-    
-    UInt16 = "UInt16"
-    UINT = "UInt16"
-    UInt32 = "UInt32"
-    UDINT = "UInt32"
-    UInt64 = "UInt64"
-    ULINT = "UInt64"
-    
-    Float = "Float"
-    REAL = "Float"
-    Double = "Double"
-    LREAL = "Double"
-
    
-def _record_variants():   
-    for t in ua.VariantType:
-        if "Int" in t.name:
-            def fparse(value, config, vtype=t):
-                return ua.Variant(int(value), vtype)
-        elif "Float" in t.name or "Double" in t.name:
-            def fparse(value, config, vtype=t):
-                return ua.Variant(float(value), vtype)
-        else:        
-            def fparse(value, config, vtype=t):
-                return ua.Variant(value, vtype)
-        class Config(BaseParser.Config):
-            type: str = 'Ua'+t.name
-            
-        cls = type( 'Ua'+t.name, (BaseParser,), {'fparse':staticmethod(fparse), 'Config':Config})
-        record_class(cls)
-        record_class(cls, type=t.name+"Variant")
-        globals()[t.name] = cls()
-        globals()['Ua'+t.name] = cls
-        
-        
-_record_variants()
-
-# record a new variant parser, it will transform any input to the right output variant 
-@record_class    
-class VariantParser(BaseParser):
-    """ Parser for UA variant 
-    
-    Exemple::
-    
-       >>> from pydevmgr_elt import VariantParser, VARIANTS
-       >>> parser = VariantParser(variant=VARIANTS.Int16)
-       >>> parser(4.5)
-       Variant(val:4.5,type:VariantType.Int16)
-    
-    """
-    VARIANTS = VARIANTS
-    
-    class Config(BaseParser.Config):
-        type: str = "Variant2"
-        variant: VARIANTS = VARIANTS.Double 
-    @staticmethod
-    def fparse(value, config):
-        return ua.Variant(value, getattr(ua.VariantType, config.variant))   
-        
 ##
 # Read and write collectors for OPC-UA 
 
