@@ -41,7 +41,7 @@ if __name__ == "__main__":
         # starting!
         server.start()
         #time.sleep(2)
-        n = build_yaml(y, "Temp")
+        n = UaNode.Config.parse_yaml(y).build(None) 
         n.connect()
         assert n.config.attribute == ua.AttributeIds.Value 
         assert n.get() == 6.7

@@ -46,7 +46,7 @@ class UaInterface(BaseInterface):
             - if str create a :class:`UaCom` from the str address 
             - if :class:`opcua.Client` wrap it in a :class:`UaCom`
             - if :class:`UaCom` use it
-        \*\*kwargs: If configuration is  None they are used to build the config otherwise they are ignored 
+        * *kwargs: If configuration is  None they are used to build the config otherwise they are ignored 
     
             
     """
