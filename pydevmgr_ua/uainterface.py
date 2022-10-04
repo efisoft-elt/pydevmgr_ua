@@ -1,11 +1,10 @@
-from pydevmgr_core import BaseNode, BaseInterface, record_class, ksplit
-from .uacom import opcua, UaCom, _UaCom, parse_com
+from pydevmgr_core import  BaseInterface, record_class
+from .uacom import UaComHandler
 from .uanode import UaNode
+from .uaengine import UaEngine
 from .uarpc import UaRpc
-from pydantic import BaseModel, AnyUrl
-from typing import Optional, Any, Union, List, Type, Dict
 
-class UaInterfaceConfig(BaseInterface.Config, extra="allow"):
+class UaInterfaceConfig(BaseInterface.Config, UaEngine.Config,  extra="allow"):
     Node = UaNode.Config
     Rpc = UaRpc.Config
 
@@ -52,32 +51,8 @@ class UaInterface(BaseInterface):
     """
            
     Config = UaInterfaceConfig
-    Com = UaCom
+    Engine = UaEngine
     Node = UaNode
     Rpc = UaRpc
-    
-    def __init__(self, 
-          key: Optional[str] = None,           
-          config: Optional[Config] = None, *,
-          com: Union[UaCom, opcua.Client, str] = None, 
-          **kwargs
-        ) -> None:
-        
-        super().__init__(key, config=config, **kwargs)        
-        com = parse_com(com, None)
-          
-        # assume it is a _UaCom object or similar 
-        # not checking the type because I am the feeling it can be usefull for simulator at some points 
-        self._com = com.subcom(self._config.prefix)
-    
-    @classmethod
-    def new_args(cls, parent, name, config):
-        d = super().new_args(parent, name, config)
-        d.update(com=parent.com)
-        return d        
-
-    @property
-    def com(self):
-        return self._com
-            
+    com_handler = UaComHandler() 
 

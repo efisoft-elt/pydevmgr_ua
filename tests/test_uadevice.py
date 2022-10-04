@@ -1,33 +1,29 @@
 from pydevmgr_ua import UaDevice
-import time
-from opcua import ua, Server
-server = Server()
-#server.set_endpoint("opc.tcp://0.0.0.0:4840/freeopcua/server/")
-server.set_endpoint("opc.tcp://localhost:4840")
+from pydevmgr_core import BaseManager
 
-# setup our own namespace, not really necessary but should as spec
-uri = "http://examples.freeopcua.github.io"
-idx = server.register_namespace(uri)
+def test_engine_creation_from_manager():
 
-# get Objects node, this is where we should put our nodes
-objects = server.get_objects_node()
+    class D(UaDevice):
+        ...
 
-# populating our address space
-myobj = objects.add_object(idx, "MyObject")
-myvar = myobj.add_variable('ns={};s=MyVariable'.format(idx), "MyVariable", 6.7)
-myvar.set_writable()    # Set MyVariable to be writable by clients
+    class M(BaseManager):
+        d = D.Config(prefix="D")
 
-# starting!
-server.start()
+    m = M('m' )
+    m.d
+    assert m.engine.localdata is m.d.engine.localdata 
 
-try:
+def test_engine_creation_from_device():
+
+    class D(UaDevice):
+        ...
     
-    
-    count = 0
-    while True:
-        time.sleep(1)
-        count += 0.1
-        myvar.set_value(count)
-finally:
-    #close connection, remove subcsriptions, etc
-    server.stop()
+    class PD(UaDevice):
+        d = D.Config(prefix="D")
+
+
+
+    pd = PD('m', prefix="PD" )
+    assert pd.d.engine.prefix == "PD.D"
+    assert pd.engine.client  == pd.d.engine.client 
+
