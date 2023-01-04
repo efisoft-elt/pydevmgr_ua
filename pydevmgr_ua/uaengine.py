@@ -1,5 +1,6 @@
 from typing import  Optional, Tuple
 from pydantic import AnyUrl, BaseModel, Field
+from pydantic.class_validators import validator
 from .config import uaconfig
 from pydevmgr_core import BaseEngine
 from dataclasses import dataclass
@@ -26,7 +27,11 @@ class UaEngineConfig(BaseModel):
     namespace: int = Field(default_factory=lambda : uaconfig.namespace)
     address: AnyUrl = Field(default_factory=lambda : uaconfig.default_address) 
     prefix: str = ""
-
+    
+    @validator('address', pre=True)
+    def _map_address(cls, address):
+        return uaconfig.host_mapping.get(str(address), address)
+    
 class UaNodeEngineConfig(BaseModel):
     suffix: str = ""
 
@@ -57,7 +62,7 @@ class UaNodeEngine(BaseEngine):
     
 
     @classmethod
-    def new(cls, com= None, config=None, *, node_name=None):
+    def new(cls, com= None, config=None, *, node_suffix=None):
         if com is None:
             return cls()
         parent_engine = _parse_com_node_to_engine(com) 
@@ -65,9 +70,11 @@ class UaNodeEngine(BaseEngine):
             config = cls.Config()
         
         engine = super().new(parent_engine, config)
-        if not node_name:
-            node_name = kjoin(parent_engine.prefix, config.suffix)
-
+        if node_suffix is None:
+            node_suffix = config.suffix
+        
+        node_name = kjoin(parent_engine.prefix, node_suffix)
+        
         engine.node_id = "ns={};s={}".format(parent_engine.namespace, node_name)
         engine.client = parent_engine.client
         engine.node_client = engine.client.get_node(engine.node_id) 
@@ -86,9 +93,8 @@ class UaRpcEngine(UaNodeEngine):
             config = UaNodeEngineConfig()
         
         # method name is the last member on config.suffix 
-        node_name, method_name = ksplit(config.suffix)
-
-        engine = super().new(com, config, node_name= node_name)
+        node_suffix, method_name = ksplit(config.suffix)
+        engine = super().new(com, config, node_suffix = node_suffix)
         engine.method_id = "{}:{}".format(com.namespace, method_name)
         
         return engine  

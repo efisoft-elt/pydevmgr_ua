@@ -1,13 +1,12 @@
-from pydevmgr_core import BaseDevice, record_class
+from pydevmgr_core import BaseDevice
+from .register import register
 from .uacom import UaComHandler
-from .config import uaconfig
 from .uainterface import UaInterface
 from .uanode import UaNode
 from .uarpc import UaRpc
 from .uaengine import UaEngine
-from pydantic import AnyUrl, Field
 
-@record_class
+@register
 class UaDevice(BaseDevice):
     Node = UaNode
     Rpc = UaRpc
@@ -20,7 +19,6 @@ class UaDevice(BaseDevice):
         Interface = UaInterface.Config
         Rpc = UaRpc.Config
 
-        type: str = "Ua"
 
     def connect(self):
         """ Connect to the OPC-UA client """

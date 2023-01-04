@@ -1,4 +1,5 @@
-from pydevmgr_core import  BaseInterface, record_class
+from pydevmgr_core import  BaseInterface
+from .register import register 
 from .uacom import UaComHandler
 from .uanode import UaNode
 from .uaengine import UaEngine
@@ -11,7 +12,7 @@ class UaInterfaceConfig(BaseInterface.Config, UaEngine.Config,  extra="allow"):
     type: str = "Ua"
     prefix: str = "" # prefix added to com.prefix 
      
-@record_class    
+@register    
 class UaInterface(BaseInterface):
     """ Interface containing :class:`pydevmgr_ua.UaNode` or :class:`pydevmgr_ua.UaRpcNode` objects
     

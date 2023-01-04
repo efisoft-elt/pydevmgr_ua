@@ -135,7 +135,7 @@ class UaComHandler:
 
     @staticmethod 
     def call_method( engine: UaRpcEngine, *args) -> int:
-        return engine.node_client.call_method(*args)
+        return engine.node_client.call_method(engine.method_id, *args)
     
     @staticmethod
     def get_value( engine: UaNodeEngine) -> Any:

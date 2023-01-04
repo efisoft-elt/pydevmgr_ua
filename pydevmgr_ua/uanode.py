@@ -1,4 +1,5 @@
-from pydevmgr_core import BaseNode, record_class
+from pydevmgr_core import BaseNode
+from .register import register 
 from .uacom import UaComHandler, UAReadCollector, UAWriteCollector
 from .uaengine import UaNodeEngine
 
@@ -17,9 +18,7 @@ class UaNodeConfig(BaseNode.Config, UaNodeEngine.Config):
         return value 
 
 
-
-
-@record_class        
+@register        
 class UaNode(BaseNode):
     """ Object representing a value node in opc-ua server
 

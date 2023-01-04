@@ -1,5 +1,5 @@
-from pydevmgr_core import BaseRpc, record_class
-
+from pydevmgr_core import BaseRpc
+from .register import register 
 from .uaengine import UaRpcEngine
 from .uacom import UaComHandler
 
@@ -9,7 +9,7 @@ from typing import  Any
 class UaRpcConfig(BaseRpc.Config, UaRpcEngine.Config):
     type: str = 'Ua'
 
-@record_class        
+@register        
 class UaRpc(BaseRpc):
     """ Object representing a value rpc node in opc-ua server """
     Config = UaRpcConfig

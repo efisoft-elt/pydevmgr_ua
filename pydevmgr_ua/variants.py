@@ -1,5 +1,6 @@
 from opcua import ua 
-from pydevmgr_core import BaseParser, record_class
+from pydevmgr_ua.register import  register
+from valueparser import BaseParser
 from typing import Callable
 from pydantic import validator
 
@@ -24,7 +25,7 @@ def _string_to_variant(s):
             raise ValueError(f"Unknown variant type {s!r}")
 
 
-@record_class
+@register
 class VariantParser(BaseParser):
     class Config(BaseParser.Config):
         type = "Variant"
@@ -38,72 +39,72 @@ class VariantParser(BaseParser):
             return value
         
     @staticmethod
-    def fparse(value, config: Config):
+    def __parse__(value, config: Config):
         return ua.Variant(config.py_type(value), config.variant)
 
-@record_class       
+@register       
 class UaInt16(BaseParser, type="UaInt16"):
     """ Parser for Int16 Variant type"""
     @staticmethod
-    def fparse(value, _):
+    def __parse__(value, _):
         return ua.Variant(int(value), ua.VariantType.Int16)
 
-@record_class   
+@register   
 class UaInt32(BaseParser, type="UaInt32"):
     """ parser for Int32 Variant type """
     @staticmethod
-    def fparse(value, _):
+    def __parse__(value, _):
         return ua.Variant(int(value), ua.VariantType.Int32)
 
-@record_class   
+@register   
 class UaInt64(BaseParser, type="UaInt64"):
     """ Parser for Int64 Variant type"""
     @staticmethod
-    def fparse(value, _):
+    def __parse__(value, _):
         return ua.Variant(int(value), ua.VariantType.Int64)
    
-@record_class   
+@register   
 class UaUInt16(BaseParser, type="UaUInt16"):
     """ Parser for UInt16 Variant type"""
     @staticmethod
-    def fparse(value, _):
+    def __parse__(value, _):
         return ua.Variant(int(value), ua.VariantType.UInt64)
    
-@record_class   
+@register   
 class UaUInt32(BaseParser, type="UaUInt32"):
     """ parser for UInt32 Variant type """
     @staticmethod
-    def fparse(value, _):
+    def __parse__(value, _):
         return ua.Variant(int(value), ua.VariantType.UInt32)
 
-@record_class   
+@register   
 class UaUInt64(BaseParser, type="UaUInt64"):
     """ Parser for UInt64 Variant type"""
     @staticmethod
-    def fparse(value, _):
+    def __parse__(value, _):
         return ua.Variant(int(value), ua.VariantType.UInt64)
 
         
-@record_class   
+@register   
 class UaFloat(BaseParser, type="UaFloat"):
     """ Parser for Float Variant type"""
     @staticmethod
-    def fparse(value, _):
+    def __parse__(value, _):
         return ua.Variant(float(value), ua.VariantType.Float)
    
-@record_class   
+@register   
 class UaDouble(BaseParser, type="UaDouble"):
     """ Parser for Double Variant type"""
     @staticmethod
-    def fparse(value, _):
+    def __parse__(value, _):
         return ua.Variant(float(value), ua.VariantType.Double)
 
         
-@record_class   
+@register   
 class UaString(BaseParser, type="UaString"):
     """ Parser for String Variant type"""
     @staticmethod
-    def fparse(value, _):
+    def __parse__(value, _):
         return ua.Variant(str(value), ua.VariantType.String)
 
 
