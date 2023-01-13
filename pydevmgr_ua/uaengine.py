@@ -154,12 +154,4 @@ class UaEngine(BaseEngine):
 
 
 
-if __name__ == "__main__":
-
-    engine = UaEngine(prefix="A")
-    assert engine.localdata ==  {}
-     
-    engine2 = UaEngine.new(engine, UaEngineConfig(namespace=6, prefix="B"))
-    assert engine2.namespace == 4
-    assert engine2.prefix == "A.B" 
     

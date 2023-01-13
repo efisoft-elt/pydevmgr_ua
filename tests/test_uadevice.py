@@ -11,7 +11,7 @@ def test_engine_creation_from_manager():
 
     m = M('m' )
     m.d
-    assert m.engine.localdata is m.d.engine.localdata 
+    assert m.engine.localnode_values is m.d.engine.localnode_values 
 
 def test_engine_creation_from_device():
 

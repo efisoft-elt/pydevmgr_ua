@@ -49,8 +49,8 @@ def test_node_get_set():
     assert node.get() == "hello"    
 
 
-def test_node_localdata_is_parent_localdata():
+def test_node_localnode_values_is_parent_localnode_values():
     com = UaCom()
     node = UaNode( com = com)
-    assert node.engine.localdata is com.localdata
+    assert node.engine.localnode_values is com.localnode_values
     

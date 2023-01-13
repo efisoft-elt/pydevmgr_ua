@@ -21,6 +21,6 @@ def test_parse_of_node():
     
     assert d.engine.client == d.i.engine.client 
     assert d.i.engine.client == d.i.n.engine.client
-    assert d.engine.localdata is d.i.n.engine.localdata 
+    assert d.engine.localnode_values is d.i.n.engine.localnode_values 
 
 
