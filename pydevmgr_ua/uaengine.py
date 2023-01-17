@@ -1,8 +1,9 @@
 from typing import  Optional, Tuple
+from opcua.client.client import Client
 from pydantic import AnyUrl, BaseModel, Field
 from pydantic.class_validators import validator
+from pydevmgr_core  import BaseObject, BaseNode
 from .config import uaconfig
-from pydevmgr_core import BaseEngine
 from dataclasses import dataclass
 import opcua
 
@@ -20,10 +21,12 @@ def ksplit(key: str) -> Tuple[str,str]:
     s, _, p = key[::-1].partition(".")
     return p[::-1], s[::-1]
 
+def ua_engine(**kwargs):
+    """ Create a new Ua Engine to be used by any pydevmgr's com= argument """
+    return UaEngine.new( None, UaEngine.Config.parse_obj(kwargs))
 
 
-
-class UaEngineConfig(BaseModel):
+class UaEngineConfig(BaseObject.Engine.Config):
     namespace: int = Field(default_factory=lambda : uaconfig.namespace)
     address: AnyUrl = Field(default_factory=lambda : uaconfig.default_address) 
     prefix: str = ""
@@ -32,7 +35,7 @@ class UaEngineConfig(BaseModel):
     def _map_address(cls, address):
         return uaconfig.host_mapping.get(str(address), address)
     
-class UaNodeEngineConfig(BaseModel):
+class UaNodeEngineConfig(BaseNode.Engine.Config):
     suffix: str = ""
 
 
@@ -48,7 +51,7 @@ def _parse_com_node_to_engine(com):
     return com 
 
 @dataclass
-class UaNodeEngine(BaseEngine):
+class UaNodeEngine(BaseNode.Engine):
     # --------------------------------------     
     client: Optional[opcua.Client] = None
     node_client: Optional[opcua.Node] = None
@@ -64,7 +67,9 @@ class UaNodeEngine(BaseEngine):
     @classmethod
     def new(cls, com= None, config=None, *, node_suffix=None):
         if com is None:
+            # engine = super().new()
             return cls()
+        
         parent_engine = _parse_com_node_to_engine(com) 
         if config is None:
             config = cls.Config()
@@ -102,7 +107,7 @@ class UaRpcEngine(UaNodeEngine):
 
 
 @dataclass
-class UaEngine(BaseEngine):
+class UaEngine(BaseObject.Engine):
     Config = UaEngineConfig
     
     client: Optional[opcua.Client] = None
@@ -114,19 +119,22 @@ class UaEngine(BaseEngine):
 
         if config is None:
             config = cls.Config()
-            
+        
+        
+                 
+         
+        if com is None:
+            engine = super().new(None, config) 
 
-        engine = super().new(com, config) 
-         
-         
-        if com is None: 
             client, namespace, prefix = (
                 opcua.Client( str(config.address) ), 
                 config.namespace, 
                 config.prefix
             )
             
-        elif (isinstance(com, BaseEngine) and not isinstance(com, UaEngine)):
+        elif (isinstance(com, BaseObject.Engine) and not isinstance(com, UaEngine)):
+            engine = super().new(com, config) 
+
             client, namespace, prefix = (
                 opcua.Client( str(config.address) ), 
                 config.namespace, 
@@ -134,12 +142,24 @@ class UaEngine(BaseEngine):
             )
 
         elif isinstance(com, str):
+            engine = super().new(None, config) 
+
             client, namespace, prefix = (
                 opcua.Client( com ), 
                 config.namespace, 
                 config.prefix
             )
+        elif isinstance(com,Client):
+            engine = super().new(None, config)
+            client, namespace, prefix = (
+                com, 
+                config.namespace, 
+                config.prefix
+            )
+
         else:
+            engine = super().new(com, config)
+
             client, namespace, prefix = (
                 com.client,
                 com.namespace,

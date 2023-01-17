@@ -23,7 +23,7 @@ class UAReadCollector:
     def __init__(self, uaclient: opcua.Client) -> None:
         params =  ua.ReadParameters()
         params.uaclient = uaclient
-        self._keys = list()
+        self._nodes = list()
         self._params = params
                 
     def add(self, node) -> None:
@@ -38,14 +38,15 @@ class UAReadCollector:
         #rv.AttributeId = ua.AttributeIds.Value
         rv.AttributeId = node.config.attribute
         self._params.NodesToRead.append(rv)
-        self._keys.append(node)
+        self._nodes.append(node)
     
     def read(self, data: dict) -> None:
         """ read all data from server and feed result in the input dictionary """
         result = self._params.uaclient.read(self._params)
-        for key,r in zip(self._keys, result):
+        
+        for node,r in zip(self._nodes, result):
             r.StatusCode.check()
-            data[key] =  r.Value.Value 
+            data[node] =  node.parse_output(r.Value.Value)
 
 class UAWriteCollector:
     """ A Collector to write the value of multiple opc-ua nodes in one roundtrip 

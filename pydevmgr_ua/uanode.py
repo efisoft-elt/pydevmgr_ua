@@ -1,3 +1,4 @@
+from enum import Enum
 from pydevmgr_core import BaseNode
 from .register import register 
 from .uacom import UaComHandler, UAReadCollector, UAWriteCollector
@@ -121,4 +122,4 @@ class UaNode(BaseNode):
             
     def _parse_value_for_ua(self, value: Any) -> None:
         return self.com_handler.parse_value(self.engine, value)
-        
+    
