@@ -434,33 +434,33 @@ email = ["email-validator (>=1.0.3)"]
 
 [[package]]
 name = "pydevmgr-core"
-version = "0.6a2"
+version = "0.6a4"
 description = "Python package to handle distributed device handling"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "pydevmgr_core-0.6a2-py3-none-any.whl", hash = "sha256:adce5899e73b1f176273039df4be953d16e431a69263a84836bee126bc86873c"},
-    {file = "pydevmgr_core-0.6a2.tar.gz", hash = "sha256:0ca936f7e8ee2b3a55176e6965d415b359770553ab6ee6455000ac2f808ffff7"},
+    {file = "pydevmgr_core-0.6a4-py3-none-any.whl", hash = "sha256:d2b3fb78170a4199291a6540538a8396ff337939499e1b9fdc6af738ceabc162"},
+    {file = "pydevmgr_core-0.6a4.tar.gz", hash = "sha256:a9c51a523f7cd47c84f892cc7e992cfddbf6e45e069245abe38ff26a05b6f2e2"},
 ]
 
 [package.dependencies]
 get-annotations = ">=0.1.2,<0.2.0"
 py-expression-eval = ">=0.3.14,<0.4.0"
 pydantic = ">=1.9,<2.0"
-systemy = ">=0.1.1,<0.2.0"
-valueparser = ">=0.1.2,<0.2.0"
+systemy = ">=0.2.a0"
+valueparser = ">=0.2.a0"
 
 [[package]]
 name = "pytest"
-version = "7.2.0"
+version = "7.2.1"
 description = "pytest: simple powerful testing with Python"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pytest-7.2.0-py3-none-any.whl", hash = "sha256:892f933d339f068883b6fd5a459f03d85bfcb355e4981e146d2c7616c21fef71"},
-    {file = "pytest-7.2.0.tar.gz", hash = "sha256:c4014eb40e10f11f355ad4e3c2fb2c6c6d1919c73f3b5a433de4708202cade59"},
+    {file = "pytest-7.2.1-py3-none-any.whl", hash = "sha256:c7c6ca206e93355074ae32f7403e8ea12163b1163c976fee7d4d84027c162be5"},
+    {file = "pytest-7.2.1.tar.gz", hash = "sha256:d45e0952f3727241918b8fd0f376f5ff6b301cc0777c6f9a556935c92d8a7d42"},
 ]
 
 [package.dependencies]
@@ -493,14 +493,14 @@ six = ">=1.5"
 
 [[package]]
 name = "pytz"
-version = "2022.7"
+version = "2022.7.1"
 description = "World timezone definitions, modern and historical"
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "pytz-2022.7-py2.py3-none-any.whl", hash = "sha256:93007def75ae22f7cd991c84e02d434876818661f8df9ad5df9e950ff4e52cfd"},
-    {file = "pytz-2022.7.tar.gz", hash = "sha256:7ccfae7b4b2c067464a6733c6261673fdb8fd1be905460396b97a073e9fa683a"},
+    {file = "pytz-2022.7.1-py2.py3-none-any.whl", hash = "sha256:78f4f37d8198e0627c5f1143240bb0206b8691d8d7ac6d78fee88b78733f8c4a"},
+    {file = "pytz-2022.7.1.tar.gz", hash = "sha256:01a0681c4b9684a28304615eba55d1ab31ae00bf68ec157ec3708a8182dbbcd0"},
 ]
 
 [[package]]
@@ -567,14 +567,14 @@ files = [
 
 [[package]]
 name = "systemy"
-version = "0.1.1"
+version = "0.2a0"
 description = "A core package to manipulate model or system hierarchical classes"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "systemy-0.1.1-py3-none-any.whl", hash = "sha256:3ec939cc2b712a2f6dfb44b0b1a818c66ac88e59af6b6f7bb9148f79a107b630"},
-    {file = "systemy-0.1.1.tar.gz", hash = "sha256:2620020f8bc940c1d84ec5e6ff023251b60425da0aa19ba2e80211a66bf0dc14"},
+    {file = "systemy-0.2a0-py3-none-any.whl", hash = "sha256:6e72171492b305b8fe961e537f87b8e6334bd9437706b5fc78bf66ce0b7fafad"},
+    {file = "systemy-0.2a0.tar.gz", hash = "sha256:5bacd5744d6236f61cca13a1ef63c690743d74e9c4bcf7f692a127e9b2d6d06f"},
 ]
 
 [package.dependencies]
@@ -609,18 +609,18 @@ files = [
 
 [[package]]
 name = "valueparser"
-version = "0.1.2"
+version = "0.2a0"
 description = "Python package for quick creation of tools to parse a value"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "valueparser-0.1.2-py3-none-any.whl", hash = "sha256:29aa88387703a110d5b411564bf1bf3b01a64f2772ba01ee0590f9cab170da66"},
-    {file = "valueparser-0.1.2.tar.gz", hash = "sha256:425bbf3e57f67979bff7db9de26f3815e929a535a9f118abca5ece0f9fef8273"},
+    {file = "valueparser-0.2a0-py3-none-any.whl", hash = "sha256:e3edd02b762ff9375fdbadf9c929b73f9733b7ea1246e5c0a58aac6a4fba5af7"},
+    {file = "valueparser-0.2a0.tar.gz", hash = "sha256:241476151153d0cbaf949115ddf11c3258502706828a0258409fcea14f2604b4"},
 ]
 
 [package.dependencies]
-systemy = ">=0.1.1,<0.2.0"
+systemy = "0.2a0"
 
 [[package]]
 name = "zipp"
@@ -641,4 +641,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "09789cbfcd8f401e0c6fe7c5d7a1bed6e5cde34739d488e8c4057fb2c492d01c"
+content-hash = "f285fa6abefbe4606fce5f5e740a7f28d4e5f1da8260351b5e20eea458b1ce6b"
