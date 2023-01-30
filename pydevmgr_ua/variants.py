@@ -1,6 +1,6 @@
 from opcua import ua 
 from pydevmgr_ua.register import  register
-from valueparser import BaseParser
+from valueparser import Parser
 from typing import Callable
 from pydantic import validator
 
@@ -25,13 +25,12 @@ def _string_to_variant(s):
             raise ValueError(f"Unknown variant type {s!r}")
 
 
-@register
-class VariantParser(BaseParser):
-    class Config(BaseParser.Config):
-        type = "Variant"
+@register("Variant")
+class VariantParser(Parser):
+    class Config(Parser.Config):
         variant: ua.VariantType = ua.VariantType.Variant
         py_type: Callable = lambda x:x 
-        toto: Callable = float 
+        
         @validator("variant", pre=True, always=True)
         def _validate_variant(cls, value):
             if isinstance(value, str):
@@ -43,42 +42,42 @@ class VariantParser(BaseParser):
         return ua.Variant(config.py_type(value), config.variant)
 
 @register       
-class UaInt16(BaseParser, type="UaInt16"):
+class UaInt16(Parser):
     """ Parser for Int16 Variant type"""
     @staticmethod
     def __parse__(value, _):
         return ua.Variant(int(value), ua.VariantType.Int16)
 
 @register   
-class UaInt32(BaseParser, type="UaInt32"):
+class UaInt32(Parser):
     """ parser for Int32 Variant type """
     @staticmethod
     def __parse__(value, _):
         return ua.Variant(int(value), ua.VariantType.Int32)
 
 @register   
-class UaInt64(BaseParser, type="UaInt64"):
+class UaInt64(Parser):
     """ Parser for Int64 Variant type"""
     @staticmethod
     def __parse__(value, _):
         return ua.Variant(int(value), ua.VariantType.Int64)
    
 @register   
-class UaUInt16(BaseParser, type="UaUInt16"):
+class UaUInt16(Parser):
     """ Parser for UInt16 Variant type"""
     @staticmethod
     def __parse__(value, _):
         return ua.Variant(int(value), ua.VariantType.UInt64)
    
 @register   
-class UaUInt32(BaseParser, type="UaUInt32"):
+class UaUInt32(Parser):
     """ parser for UInt32 Variant type """
     @staticmethod
     def __parse__(value, _):
         return ua.Variant(int(value), ua.VariantType.UInt32)
 
 @register   
-class UaUInt64(BaseParser, type="UaUInt64"):
+class UaUInt64(Parser):
     """ Parser for UInt64 Variant type"""
     @staticmethod
     def __parse__(value, _):
@@ -86,14 +85,14 @@ class UaUInt64(BaseParser, type="UaUInt64"):
 
         
 @register   
-class UaFloat(BaseParser, type="UaFloat"):
+class UaFloat(Parser):
     """ Parser for Float Variant type"""
     @staticmethod
     def __parse__(value, _):
         return ua.Variant(float(value), ua.VariantType.Float)
    
 @register   
-class UaDouble(BaseParser, type="UaDouble"):
+class UaDouble(Parser):
     """ Parser for Double Variant type"""
     @staticmethod
     def __parse__(value, _):
@@ -101,7 +100,7 @@ class UaDouble(BaseParser, type="UaDouble"):
 
         
 @register   
-class UaString(BaseParser, type="UaString"):
+class UaString(Parser):
     """ Parser for String Variant type"""
     @staticmethod
     def __parse__(value, _):
@@ -110,3 +109,4 @@ class UaString(BaseParser, type="UaString"):
 
 if __name__ == "__main__":
     print( UaUInt32().parse(4.3))
+    print( Parser["UaDouble"]().parse(5.0))
