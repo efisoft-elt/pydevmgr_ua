@@ -1,4 +1,5 @@
 from enum import Enum
+from opcua.ua import uaerrors
 from pydevmgr_core import BaseNode
 from .register import register 
 from .uacom import UaComHandler, UAReadCollector, UAWriteCollector
@@ -6,11 +7,12 @@ from .uaengine import UaNodeEngine
 
 from opcua import ua
 from typing import Any
-from pydantic import validator
+from pydantic import validator, Field
+from systemy import autodoc
 
 class UaNodeConfig(BaseNode.Config, UaNodeEngine.Config):
     type: str = 'Ua'
-    attribute: ua.AttributeIds = ua.AttributeIds.Value
+    attribute: ua.AttributeIds = Field( ua.AttributeIds.Value, description="OPC-UA Attribute specification")
     
     @validator("attribute", pre=True)
     def _validate_attribute(cls, value):
@@ -19,23 +21,37 @@ class UaNodeConfig(BaseNode.Config, UaNodeEngine.Config):
         return value 
 
 
-@register        
+class RuntimNodeError(RuntimeError):
+    """ Error handler, trying to get error more explicit """
+    def __init__(self, err, node):
+        complement = ""
+        if isinstance( err , uaerrors.BadNodeIdUnknown ):
+            complement = f"\n - Check if node id {node.engine.node_id} exists on server"
+        if isinstance( err, AttributeError) and 'send_request' in str(err):
+            complement = f"\n - check that connection to server has been established"
+        msg =  f"({type(err).__name__}) {err} \n - When handling node {node!r}.{complement}"
+        super().__init__(msg)
+
+
+
+@register
+@autodoc
 class UaNode(BaseNode):
     """ Object representing a value node in opc-ua server
 
     This is an interface representing one single value (node) in an OPC-UA server. 
     
-    Args:
     
-        key (str, optional): The string key representing the node in its context. If none a unique 
-                   string key is build.
-        config (optional, :class:`pydevmgr_ua.UaNode.Config`, dict): Config for the node
-            includes: 
-                - suffix (str): the node suffix in the OPC-UA server
-                - attribute (uaAttributeIds) 
-        
-        For other arguments please see :class:`pydevmgr_core.BaseNode` documentation
-                
+    Args:
+        key (str, optional): Key description of the node 
+        config (UeNode.Config, optional): as specified bellow  
+        com (UaCom, UaEngine, optional): The communication protocol 
+        **kwargs: config parameters as specified bellow
+
+
+    __autodoc__ 
+
+                    
     .. note::
             
                 Several parser to ua Variant are defined in pydevmgr_ua and can be set with the `parser` argument: 
@@ -53,13 +69,13 @@ class UaNode(BaseNode):
                 
     Example:
     
-    In the example bellow it is assumed that the OPC UA server as a nodesid "ns=4;s=MAIN.Tamp001" node
+    In the example bellow it is assumed that the OPC UA server as a nodesid "ns=4;s=MAIN.Temp001" node
     defined.
     
     ::
     
         >>> from pydevmgr_ua import UaNode, UaCom
-        >>> com = UaCom(address=="opc.tcp://localhost:4840", namespace=4, prefix="MAIN")
+        >>> com = UaCom(address="opc.tcp://localhost:4840", namespace=4, prefix="MAIN")
         >>> temp = UaNode("temperature" , com=com, suffix="Temp001")
         >>> temp.get()
         
@@ -82,7 +98,22 @@ class UaNode(BaseNode):
         com = UaCom(address= "opc.tcp://localhost:4840", namespace=4, prefix="MAIN")
         sensors = MyInterface('sensors', com=com)
         
-                                    
+    A UaDevice will create a com object from confurtion directly:
+
+    ::
+
+        from pydevmgr_ua import UaDevice, UaNode
+        from pydevmgr_core.nodes import Formula1
+        
+        class MyDevice(UaDevice):            
+            temp_volt = UaNode.Config(suffix="Temp001")
+            humidity = UaNode.Config(suffix="Humidity001")
+            
+            temp_kelvin = Formula1.Config(node="temp_volt", formula="230 + 1.234 * t", varname="t")
+        
+        sensors = MyDevice( 'sensors', address="opc.tcp://localhost:4840", namespace=4, prefix="MAIN")
+
+
     """
     Config = UaNodeConfig
     Engine = UaNodeEngine
@@ -107,8 +138,11 @@ class UaNode(BaseNode):
     
     def fget(self) -> Any:
         """ get the value from server """
-        return self.com_handler.get_attribute( self.engine, self.config.attribute)
-    
+        try:
+            return self.com_handler.get_attribute( self.engine, self.config.attribute)
+        except (RuntimeError, AttributeError) as e:
+            raise RuntimNodeError(e, self)  from e 
+           
     def fset(self, value: Any) -> None:
         """ set the value on server 
         
@@ -117,9 +151,18 @@ class UaNode(BaseNode):
                 can be str, float, int, or :class:`ua.Variant` or  :class:`ua.DataValue` 
         """
         a = self.config.attribute
-        datavalue = self._parse_value_for_ua(value) # is the node as a parser it as already been parsed 
-        self.com_handler.set_attribute( self.engine, a, datavalue)    
+        datavalue = self._parse_value_for_ua(value) # is the node as a parser it as already been parsed
+        try:
+            self.com_handler.set_attribute( self.engine, a, datavalue)    
+        except (RuntimeError, AttributeError) as e:
+            raise RuntimNodeError(e, self)  from e 
+
             
     def _parse_value_for_ua(self, value: Any) -> None:
         return self.com_handler.parse_value(self.engine, value)
     
+    def __repr__(self):
+        type_ = type(self)
+        # module = type_.__module__ 
+        qualname = type_.__qualname__ 
+        return f"<{qualname} key={self.key!r} <-> {self.engine.node_id} ({hex(id(self))})>"

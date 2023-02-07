@@ -182,8 +182,9 @@ class UaComHandler:
         
         Args:
             value (int, float, str, :class:`ua.Variant`,  :class:`ua.DataValue`)
-                note if int, to remove ambiguity between int64, int32, the real variant is asked to 
-                the server the first time than cashed. This should rarely append as UA type will be  
+                note if int, to remove ambiguity between int64, int32, 
+                the real variant is asked to the server the first time than cashed.
+                This should rarely append as UA type will be  
                 parsed through the :class:`pydevmgr.UaNode`.
                 
         """

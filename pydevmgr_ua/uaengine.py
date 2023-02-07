@@ -27,16 +27,16 @@ def ua_engine(**kwargs):
 
 
 class UaEngineConfig(BaseObject.Engine.Config):
-    namespace: int = Field(default_factory=lambda : uaconfig.namespace)
-    address: AnyUrl = Field(default_factory=lambda : uaconfig.default_address) 
-    prefix: str = ""
+    namespace: int = Field(default_factory=lambda : uaconfig.namespace, description="server namespace number")
+    address: AnyUrl = Field(default_factory=lambda : uaconfig.default_address, description="OPC-UA server address") 
+    prefix: str = Field("", description="Server prefix shoud lead to a valid Node when suffix is added")
     
     @validator('address', pre=True)
     def _map_address(cls, address):
         return uaconfig.host_mapping.get(str(address), address)
     
 class UaNodeEngineConfig(BaseNode.Engine.Config):
-    suffix: str = ""
+    suffix: str = Field("", description="Server node name or suffix (added to parent prefix)")
 
 
 def _parse_com_node_to_engine(com):

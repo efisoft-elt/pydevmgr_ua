@@ -1,4 +1,5 @@
 from pydevmgr_core import BaseDevice
+from systemy  import autodoc
 from .register import register
 from .uacom import UaComHandler
 from .uainterface import UaInterface
@@ -7,7 +8,21 @@ from .uarpc import UaRpc
 from .uaengine import UaEngine
 
 @register
+@autodoc
 class UaDevice(BaseDevice):
+    """ Represent a Device on an OPC-UA server 
+    Args:
+        
+        key (optional, str): an optional key defining the device.
+        config (optional, :UaInterface.Config): as defined bellow 
+        com (optional, :class:`UaCom`, :class:`opcua.Client`, dict, str): 
+            - if str create a :class:`UaCom` from the str address 
+            - if :class:`opcua.Client` wrap it in a :class:`UaCom`
+            - if :class:`UaCom` use it
+        * *kwargs: configuration as defined bellow  
+
+    __autodoc__ 
+    """
     Node = UaNode
     Rpc = UaRpc
     Interface = UaInterface

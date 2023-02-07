@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pydevmgr_ua"
-version = "0.6a5"
+version = "0.6a6"
 description = "pydevmgr plugin to handle opc-ua communication"
 license = "CeCILL Free Software License Agreement v2.1"
 authors = ["Sylvain Guieu <sylvain.guieu@univ-grenoble-alpes.fr>"]

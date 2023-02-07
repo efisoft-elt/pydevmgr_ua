@@ -434,22 +434,22 @@ email = ["email-validator (>=1.0.3)"]
 
 [[package]]
 name = "pydevmgr-core"
-version = "0.6a5"
+version = "0.6a7"
 description = "Python package to handle distributed device handling"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "pydevmgr_core-0.6a5-py3-none-any.whl", hash = "sha256:836e58b8886fd04282d245f91df5e2d260d638f2ce9b74a44652f957cc3870d2"},
-    {file = "pydevmgr_core-0.6a5.tar.gz", hash = "sha256:1733c3da736ba9b81937fc02b48d628cf0c3b07e375a6d21f835955f9cf38efc"},
+    {file = "pydevmgr_core-0.6a7-py3-none-any.whl", hash = "sha256:1773e0ac9e77bcee33884526a61ca6d481ca15cbef9140be6639983d38895200"},
+    {file = "pydevmgr_core-0.6a7.tar.gz", hash = "sha256:0c1853b2bc1d1588a42a2acbb1dcb3d70dbee2ce0960bc1d72bcbfec8b0779a6"},
 ]
 
 [package.dependencies]
 get-annotations = ">=0.1.2,<0.2.0"
 py-expression-eval = ">=0.3.14,<0.4.0"
 pydantic = ">=1.9,<2.0"
-systemy = ">=0.2.a0"
-valueparser = ">=0.2.a0"
+systemy = ">=0.2.a3"
+valueparser = ">=0.2.a1"
 
 [[package]]
 name = "pytest"
@@ -567,14 +567,14 @@ files = [
 
 [[package]]
 name = "systemy"
-version = "0.2a1"
+version = "0.2a3"
 description = "A core package to manipulate model or system hierarchical classes"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "systemy-0.2a1-py3-none-any.whl", hash = "sha256:d343ce9aecd229ccc45c1e2eb1c21c4cefb07e26d031060e92925164c60a2668"},
-    {file = "systemy-0.2a1.tar.gz", hash = "sha256:0100d46146016444cbc60ad225c2b3be3a2b3341a9457d20fdd8977ecb144025"},
+    {file = "systemy-0.2a3-py3-none-any.whl", hash = "sha256:09388ed7dec83834325b0b718b6ead664b4982ccfc69fc1c8fed32089d21f32a"},
+    {file = "systemy-0.2a3.tar.gz", hash = "sha256:4255b6a2eaa8ca69659965ebedb29caac9e06af40113203d12f5fb6a5baf70ed"},
 ]
 
 [package.dependencies]
@@ -609,29 +609,29 @@ files = [
 
 [[package]]
 name = "valueparser"
-version = "0.2a1"
+version = "0.2a2"
 description = "Python package for quick creation of tools to parse a value"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "valueparser-0.2a1-py3-none-any.whl", hash = "sha256:75501c1d64ce0d13d4f2dcade2f7de7f31f0b1663361069bc360eb474da10242"},
-    {file = "valueparser-0.2a1.tar.gz", hash = "sha256:20f676cf0d406002e56acbdf10abe617e44128aef3af0f096feab5b186ff71fa"},
+    {file = "valueparser-0.2a2-py3-none-any.whl", hash = "sha256:58e74b4a60c3e0c058134b0a0af2125769a17ef3520becb425752842a0877dd2"},
+    {file = "valueparser-0.2a2.tar.gz", hash = "sha256:d6e778bd7012314c25c994c018bd2da8f9c42b43193388f75a8ba94de01151bf"},
 ]
 
 [package.dependencies]
-systemy = "0.2a1"
+systemy = ">=0.2a2"
 
 [[package]]
 name = "zipp"
-version = "3.12.0"
+version = "3.12.1"
 description = "Backport of pathlib-compatible object wrapper for zip files"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "zipp-3.12.0-py3-none-any.whl", hash = "sha256:9eb0a4c5feab9b08871db0d672745b53450d7f26992fd1e4653aa43345e97b86"},
-    {file = "zipp-3.12.0.tar.gz", hash = "sha256:73efd63936398aac78fd92b6f4865190119d6c91b531532e798977ea8dd402eb"},
+    {file = "zipp-3.12.1-py3-none-any.whl", hash = "sha256:6c4fe274b8f85ec73c37a8e4e3fa00df9fb9335da96fb789e3b96b318e5097b3"},
+    {file = "zipp-3.12.1.tar.gz", hash = "sha256:a3cac813d40993596b39ea9e93a18e8a2076d5c378b8bc88ec32ab264e04ad02"},
 ]
 
 [package.extras]
