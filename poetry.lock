@@ -438,18 +438,22 @@ version = "0.6a7"
 description = "Python package to handle distributed device handling"
 category = "main"
 optional = false
-python-versions = ">=3.7,<4.0"
-files = [
-    {file = "pydevmgr_core-0.6a7-py3-none-any.whl", hash = "sha256:1773e0ac9e77bcee33884526a61ca6d481ca15cbef9140be6639983d38895200"},
-    {file = "pydevmgr_core-0.6a7.tar.gz", hash = "sha256:0c1853b2bc1d1588a42a2acbb1dcb3d70dbee2ce0960bc1d72bcbfec8b0779a6"},
-]
+python-versions = "^3.7"
+files = []
+develop = false
 
 [package.dependencies]
-get-annotations = ">=0.1.2,<0.2.0"
-py-expression-eval = ">=0.3.14,<0.4.0"
-pydantic = ">=1.9,<2.0"
+get-annotations = "^0.1.2"
+py-expression-eval = "^0.3.14"
+pydantic = "^1.9"
 systemy = ">=0.2.a3"
 valueparser = ">=0.2.a1"
+
+[package.source]
+type = "git"
+url = "https://github.com/efisoft-elt/pydevmgr_core.git"
+reference = "issue2"
+resolved_reference = "4c731a1e9860e231b231cb3dce55726a2dc753a1"
 
 [[package]]
 name = "pytest"
@@ -641,4 +645,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "f285fa6abefbe4606fce5f5e740a7f28d4e5f1da8260351b5e20eea458b1ce6b"
+content-hash = "b27dffc723a82f269a2bc92fbbf466a9e72ba02e8b6ffbb4a71047bf04514dc2"

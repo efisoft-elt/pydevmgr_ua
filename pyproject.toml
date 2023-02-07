@@ -9,7 +9,8 @@ packages = [{include = "pydevmgr_ua"}]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-pydevmgr-core = ">=0.6.a4"
+#pydevmgr-core = ">=0.6.a8"
+pydevmgr-core = { git="https://github.com/efisoft-elt/pydevmgr_core.git", branch="issue2" }
 cryptography = "^39.0.0"
 opcua = "^0.98.13"
 
