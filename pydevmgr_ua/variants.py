@@ -2,7 +2,10 @@ from opcua import ua
 from pydevmgr_ua.register import  register
 from valueparser import Parser
 from typing import Callable
-from pydantic import validator
+try:
+    from pydantic.v1 import validator
+except ModuleNotFoundError:
+    from pydantic import validator
 
 _extra_variants = {
     "INT" : ua.VariantType.Int16 ,

@@ -7,7 +7,10 @@ from .uaengine import UaNodeEngine
 
 from opcua import ua
 from typing import Any
-from pydantic import validator, Field
+try:
+    from pydantic.v1 import validator, Field
+except ModuleNotFoundError:
+    from pydantic import validator, Field
 from systemy import autodoc
 
 class UaNodeConfig(BaseNode.Config, UaNodeEngine.Config):

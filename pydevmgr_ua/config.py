@@ -1,4 +1,7 @@
-from pydantic import BaseModel, AnyUrl, Field
+try:
+    from pydantic.v1 import BaseModel, AnyUrl, Field
+except ModuleNotFoundError:
+    from pydantic import BaseModel, AnyUrl, Field
 from typing import Optional, Dict, Union
 import os 
 import json 

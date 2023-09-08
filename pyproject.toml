@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pydevmgr_ua"
-version = "0.6a6"
+version = "0.6a7"
 description = "pydevmgr plugin to handle opc-ua communication"
 license = "CeCILL Free Software License Agreement v2.1"
 authors = ["Sylvain Guieu <sylvain.guieu@univ-grenoble-alpes.fr>"]
@@ -9,7 +9,7 @@ packages = [{include = "pydevmgr_ua"}]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-#pydevmgr-core = ">=0.6.a8"
+#pydevmgr-core = ">=0.6.a10"
 pydevmgr-core = { git="https://github.com/efisoft-elt/pydevmgr_core.git", branch="issue2" }
 cryptography = "^39.0.0"
 opcua = "^0.98.13"

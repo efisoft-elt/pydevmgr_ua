@@ -1,7 +1,13 @@
 from typing import  Optional, Tuple
 from opcua.client.client import Client
-from pydantic import AnyUrl, BaseModel, Field
-from pydantic.class_validators import validator
+try:
+    from pydantic.v1 import AnyUrl,  Field
+except ModuleNotFoundError:
+    from pydantic import AnyUrl,  Field
+try:
+    from pydantic.v1.class_validators import validator
+except ModuleNotFoundError:
+    from pydantic.class_validators import validator
 from pydevmgr_core  import BaseObject, BaseNode
 from .config import uaconfig
 from dataclasses import dataclass
