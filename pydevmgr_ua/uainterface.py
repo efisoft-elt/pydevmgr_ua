@@ -2,7 +2,6 @@ from pydevmgr_core import BaseNode, BaseInterface, record_class, ksplit
 from .uacom import opcua, UaCom, _UaCom, parse_com
 from .uanode import UaNode
 from .uarpc import UaRpc
-from pydantic import BaseModel, AnyUrl
 from typing import Optional, Any, Union, List, Type, Dict
 
 class UaInterfaceConfig(BaseInterface.Config, extra="allow"):

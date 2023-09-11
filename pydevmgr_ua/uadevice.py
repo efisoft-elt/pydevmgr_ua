@@ -5,7 +5,10 @@ from .uainterface import UaInterface
 from .uanode import UaNode
 from .uarpc import UaRpc
 from typing import  Optional, Any
-from pydantic import AnyUrl, Field
+try:
+    from pydantic.v1 import AnyUrl, Field
+except ModuleNotFoundError:
+    from pydantic import AnyUrl, Field
 
 @record_class
 class UaDevice(BaseDevice):

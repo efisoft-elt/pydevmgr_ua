@@ -5,7 +5,10 @@ from .uabase import _UaComCapabilities
 import opcua
 from opcua import ua
 from typing import Callable, Optional, Any, Union
-from pydantic import AnyUrl, BaseModel, validator
+try:
+    from pydantic.v1 import AnyUrl, BaseModel, validator
+except ModuleNotFoundError:
+    from pydantic import AnyUrl, BaseModel, validator
 
 class UaRpcConfig(BaseRpc.Config):
     type: str = 'Ua'

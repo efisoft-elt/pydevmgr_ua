@@ -3,7 +3,10 @@ from opcua import ua
 from typing import Callable, Optional, Any,  Union
 from pydevmgr_core import reconfig, BaseParser, record_class
 from .config import uaconfig
-from pydantic import BaseModel, AnyUrl, Field, Extra, validator
+try:
+    from pydantic.v1 import BaseModel, AnyUrl, Field, Extra, validator
+except ModuleNotFoundError:
+    from pydantic import BaseModel, AnyUrl, Field, Extra, validator
 
 
 def kjoin(*names) -> str:        
